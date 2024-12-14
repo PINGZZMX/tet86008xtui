@@ -1,9 +1,10 @@
--- TracersModule.lua
+-- 43424TracerModule.lua
+
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 local Camera = workspace.CurrentCamera
 
-local EnvironmentTracers = {
+local EnvironmentTracers = { 
     Settings = {
         Enabled = false,
         Transparency = 0.5,
@@ -27,8 +28,8 @@ local function WrapTracers(Player)
                 if OnScreen then
                     PlayerTable.Tracer.Visible = true
                     PlayerTable.Tracer.From = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y) -- Bottom of the screen
-                    PlayerTable.Tracer.To = Vector2.new(Position.X, Position.Y)
-                    PlayerTable.Tracer.Color = EnvironmentTracers.Settings.Color
+                    PlayerTable.Tracer.To = Vector2.new(Position.X, Position.Y) -- Adjust position here
+                    PlayerTable.Tracer.Color = EnvironmentTracers.Settings.Color 
                     PlayerTable.Tracer.Thickness = EnvironmentTracers.Settings.Thickness
                     PlayerTable.Tracer.Transparency = EnvironmentTracers.Settings.Transparency
                 else
@@ -61,7 +62,12 @@ local function LoadTracers()
     Players.PlayerRemoving:Connect(UnWrapTracers)
 end
 
+local function toggleTracers()
+    EnvironmentTracers.Settings.Enabled = not EnvironmentTracers.Settings.Enabled
+end
+
 return {
-    EnvironmentTracers = EnvironmentTracers,
-    LoadTracers = LoadTracers
+    LoadTracers = LoadTracers,
+    ToggleTracers = toggleTracers,
+    Environment = EnvironmentTracers
 }
